@@ -39,7 +39,7 @@ inquirer
   } else if (data.option === 'Add a Employee') {
     addEmp()
   } else if (data.option === 'Update an Employee') {
-      console.log('update employee')
+    updateEmp()
   } else {
       console.log('leave')
   }
@@ -114,6 +114,27 @@ function addEmp() {
  .then((data) => {
   db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${data.first}", "${data.last}", ${data.roleid}, ${data.manaid})`, function (err, results) {
     console.log(`${data.first} ${data.last} has been added as an employee.`);
+  });
+ });
+}
+
+function updateEmp() {
+  inquirer
+.prompt([
+  {
+    type: 'input',
+    name: 'empid',
+    message: `What is the employee's id?`,
+  },
+  {
+    type: 'input',
+    name: 'roleid',
+    message: `What is the id of employee's new role?`,
+  },
+])
+ .then((data) => {
+  db.query(`UPDATE employee SET role_id = ${data.roleid} WHERE id = ${data.empid}`, function (err, results) {
+    console.log(`Updated role for Employee ID:${data.empid}.`);
   });
  });
 }
