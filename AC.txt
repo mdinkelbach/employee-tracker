@@ -1,0 +1,22 @@
+When start, get options to:
+	View all departments
+	View all roles
+	view all employees
+	Add a department
+	Add a role
+	Add an employee
+	Update employee role
+When choose to view departments:
+	Table showing department names and ids
+When choose to view roles:
+	Table showing job title, role id, department of role, salary 	of role
+When choose to view employees:
+	Table showing employee id, first name, last name, title, 	department, salary, manager
+When choose to add department
+	Enter department name
+When choose to add role
+	Enter role name, role salary, and department role belongs to
+When choose to add employee
+	Enter first name, last name, role, and manager
+When choose to update employee
+	Choose employee, new role
