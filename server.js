@@ -33,14 +33,87 @@ inquirer
           console.log(results);
         });
   } else if (data.option === 'Add a Department') {
-      console.log('add department')
+    addDept()
   } else if (data.option === 'Add a Role') {
-      console.log('add role')
+    addRole()
   } else if (data.option === 'Add a Employee') {
-      console.log('add employee')
+    addEmp()
   } else if (data.option === 'Update an Employee') {
       console.log('update employee')
   } else {
       console.log('leave')
   }
 });
+
+function addDept() {
+  inquirer
+.prompt([
+  {
+    type: 'input',
+    name: 'department',
+    message: `What is the department's name?`,
+  },
+])
+ .then((data) => {
+  db.query(`INSERT INTO department (name) VALUES ("${data.department}") `, function (err, results) {
+    console.log(`${data.department} added to list of departments.`);
+  });
+ });
+}
+
+function addRole() {
+  inquirer
+.prompt([
+  {
+    type: 'input',
+    name: 'role',
+    message: `What is the role's name?`,
+  },
+  {
+    type: 'input',
+    name: 'salary',
+    message: `What is the role's salary?`,
+  },
+  {
+    type: 'input',
+    name: 'deptid',
+    message: 'What is the id of the department the role belongs to?',
+  },
+])
+ .then((data) => {
+  db.query(`INSERT INTO role (title, salary, department_id) VALUES ("${data.role}", ${data.salary}, ${data.deptid})`, function (err, results) {
+    console.log(`${data.role} added to list of roles.`);
+  });
+ });
+}
+
+function addEmp() {
+  inquirer
+.prompt([
+  {
+    type: 'input',
+    name: 'first',
+    message: `What is the employee's first name?`,
+  },
+  {
+    type: 'input',
+    name: 'last',
+    message: `What is the employee's last name?`,
+  },
+  {
+    type: 'input',
+    name: 'roleid',
+    message: 'What is the id of the role the employee belongs to?',
+  },
+  {
+    type: 'input',
+    name: 'manaid',
+    message: 'What is the employee id of the manager who oversees this employee?',
+  },
+])
+ .then((data) => {
+  db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${data.first}", "${data.last}", ${data.roleid}, ${data.manaid})`, function (err, results) {
+    console.log(`${data.first} ${data.last} has been added as an employee.`);
+  });
+ });
+}
