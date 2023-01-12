@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
-const cTable = require('console.table');
 
+// SQL connection
 const db = mysql.createConnection(
     {
       host: 'localhost',
@@ -11,6 +11,7 @@ const db = mysql.createConnection(
     },
   );
 
+// List of options for application, directing to each function based on answer
 function start() {
 inquirer
 .prompt([
@@ -43,28 +44,31 @@ inquirer
 });
 }
 
+// Displays a list of all departments
 function viewDepartments() {
   db.query('SELECT name, id FROM department', function (err, results) {
-    console.log('\n');
-        console.table("Departments", results);
-        console.log('\n');
+      console.log('\n');
+      console.table("Departments", results);
+      console.log('\n');
         });
         setTimeout(() => {
             start();
         }, 500);
 }
 
+// Displays a list of all roles
 function viewRoles() {
   db.query('SELECT role.title, role.id AS role_id, department.name AS department, salary FROM role JOIN department ON role.department_id = department.id;', function (err, results) {
-        console.log('\n');
-        console.table("Roles", results);
-        console.log('\n');
+      console.log('\n');
+      console.table("Roles", results);
+      console.log('\n');
         });
         setTimeout(() => {
             start();
         }, 500);
 }
 
+// Displays a list of all employees, creating a seperate query to pull up all employees to find manager names
 function viewEmployees() {
         let empList = [];
         let employees = [];
@@ -89,6 +93,7 @@ function viewEmployees() {
       })
     }
 
+// Allows a new department to be added
 function addDept() {
   inquirer
 .prompt([
@@ -110,6 +115,7 @@ function addDept() {
  });
 }
 
+// Allows a new role to be added
 function addRole() {
   inquirer
 .prompt([
@@ -141,6 +147,7 @@ function addRole() {
  });
 }
 
+// Allows a new employee to be added
 function addEmp() {
 inquirer
 .prompt([
@@ -177,6 +184,7 @@ inquirer
  });
 }
 
+// Allows an existing employee's role to be changed
 function updateEmp() {
   inquirer
 .prompt([
